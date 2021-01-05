@@ -1,0 +1,26 @@
+Package: anchorpoint
+Title: Anchor Point Selection Based on the Gini Inequality Criterion
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Lucas",
+           family = "Kohler",
+           role = c("aut", "cre"),
+           email = "lucas.kohler@hispeed.ch")
+Description: This package implements a Anchor Point Selection method based on the paper 'Anchor Point Selection – Scale Alignment Based on an Inequality Criterion' by Strobl et al. (2020). It provides data generating processes and graphical decision support functions (criterion path, shifted item plots and a graphical test).   
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    grDevices,
+    stats,
+    ineq,
+    graphics,
+    scales,
+    psychotools,
+    multcomp
+Suggests: 
+    qvcalc,
+    mirt
