@@ -2,8 +2,8 @@
 % Please edit documentation in R/anchorpoint.R
 \name{plot.anchorpoint}
 \alias{plot.anchorpoint}
-\title{plot function
-#' hand over location_picker = TRUE, to identify specific points in the plot
+\title{Plot function
+hand over location_picker = TRUE, to identify specific points in the plot
 to terminate the function, press any mouse button other than the first (X11 device) or press ESC key (quartz)
 see ?identify for help}
 \usage{
@@ -19,8 +19,8 @@ see ?identify for help}
 \item{...}{additional parameters for plot function as for standard plot function (e.g. col)}
 }
 \description{
-plot function
-#' hand over location_picker = TRUE, to identify specific points in the plot
+Plot function
+hand over location_picker = TRUE, to identify specific points in the plot
 to terminate the function, press any mouse button other than the first (X11 device) or press ESC key (quartz)
 see ?identify for help
 }

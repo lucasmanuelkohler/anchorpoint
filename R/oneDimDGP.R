@@ -1,5 +1,4 @@
-##########
-#' data generating process for one dimensional rasch model
+#' Data generating process for one dimensional rasch model
 #' @param nobs number of observations in each group (here equal)
 #' @param tlength number of items the test contains
 #' @param DIFpercent rel. frequency of DIF items in the test
@@ -92,7 +91,7 @@ dgp_single <- function(nobs,tlength,DIFpercent,
                             },
                             #favor focal group (and default)
                             {
-                              if(DIFeffect != "favorfoc") warning("DIF pattern not valid. 'favorfoc' DIF pattern is used.")
+                              if(DIFpattern != "favorfoc") warning("DIF pattern not valid. 'favorfoc' DIF pattern is used.")
                               rep(-1,nDIF)
                             }
     )

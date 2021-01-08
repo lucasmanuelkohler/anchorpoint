@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{print.plot.anchorpoint}
 \alias{print.plot.anchorpoint}
-\title{print function for plot.anchorpoint}
+\title{Print function for plot.anchorpoint}
 \usage{
 \method{print}{plot.anchorpoint}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-print function for plot.anchorpoint
+Print function for plot.anchorpoint
 }

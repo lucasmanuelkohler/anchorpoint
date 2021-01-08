@@ -2,7 +2,7 @@
 % Please edit documentation in R/oneDimDGP.R
 \name{dgp_single}
 \alias{dgp_single}
-\title{data generating process for one dimensional rasch model}
+\title{Data generating process for one dimensional rasch model}
 \usage{
 dgp_single(
   nobs,
@@ -42,5 +42,5 @@ dgp_single(
 list containing response matrix, group assignments, DIFindex, DIFside, itemref, itemfoc
 }
 \description{
-data generating process for one dimensional rasch model
+Data generating process for one dimensional rasch model
 }

@@ -1,5 +1,5 @@
-#' plot function
-#' #' hand over location_picker = TRUE, to identify specific points in the plot
+#' Plot function
+#' hand over location_picker = TRUE, to identify specific points in the plot
 #' to terminate the function, press any mouse button other than the first (X11 device) or press ESC key (quartz)
 #' see ?identify for help
 #' @param x anchorpoint object as produced by the function \code{anchorpoint}
@@ -28,9 +28,7 @@ plot.anchorpoint <- function(x,ask = T,location_picker = FALSE,...) {
   if (length(out)>0) return(out)
 }
 
-
-
-#' print function for plot.anchorpoint
+#' Print function for plot.anchorpoint
 #' @param x  plot.anchorpoint object
 #' @param ... further arguments passed to or from other methods.
 #' @export
@@ -48,8 +46,7 @@ print.plot.anchorpoint <- function(x,...) {
   }
 }
 
-
-#' print function
+#' Print function
 #' @param x anchorpoint object as produced by the function \code{anchorpoint}
 #' @param ... further arguments passed to or from other methods (e.g. digits for rounding).
 #' @export
@@ -68,7 +65,8 @@ print.anchorpoint <- function(x,...) {
   }
   cat("For local optima use plot(anchorpoint.obj, location_picker = TRUE) or summary(anchorpoint.obj)")
 }
-#' print function for summary.anchorpoint
+
+#' Print function for summary.anchorpoint
 #' @param x  summary.anchorpoint object
 #' @param ... further arguments passed to or from other methods.
 #' @export
@@ -98,7 +96,7 @@ print.summary.anchorpoint <- function(x, ...) {
   }
 }
 
-#' summary function
+#' Summary function
 #' @param object anchorpoint object as produced by the function \code{anchorpoint}
 #' @param ...  additional arguments affecting the summary produced.
 #' @export
@@ -158,12 +156,17 @@ waldtestpV <- function(object, shift = NULL,...) {
   out
 }
 
-#' anchorpoint function
+#' Function to produce anchorpoint objects
 #' @param rm1 Fitted Rasch Model object corresponding to the first group. Object is of class "raschmodel", produced by function \code{RaschModel.fit} of the package \pkg{psychotools}.
 #' @param rm2  Fitted Rasch Model object corresponding to the second group. Object is of class "raschmodel", produced by function \code{RaschModel.fit} of the package \pkg{psychotools}.
 #' @param select a string, specifying the criterion that is evaluated ("CLF Criterion" or "Gini Index", abbreviations are accepted)
 #' @param grid a string, specifying the grid method that is used to generated the shifts for evaluation ("symmetric" or "sparse", abbreviations are accepted)
-#' @return an anchorpoint object containing: list with global optima, list with all results, list with the rm object
+#' @return an anchorpoint object containing:
+#' - list with global optima
+#' - list with all results (grids and criterion values)
+#' - string with used criteria
+#' - string with used grids
+#' - list with the rm object
 #' @export
 anchorpoint <- function(rm1, rm2, select = c("CLF Criterion","Gini Index"), grid = c("symmetric", "sparse")){
 
@@ -280,7 +283,7 @@ get_results <- function(grid,shift,getTestResults,rm,metric){
   return(out)
 }
 
-#' criterion function
+#' Criterion function
 #' @param rm1 Fitted Rasch Model object corresponding to the first group. Object is of class "raschmodel", produced by function \code{raschmodel} of the package \pkg{psychotools}.
 #' @param rm2  Fitted Rasch Model object corresponding to the second group. Object is of class "raschmodel", produced by function \code{raschmodel} of the package \pkg{psychotools}.
 #' @param select criterion: Gini Index or CLF Criterion
@@ -585,6 +588,4 @@ shiftPlot <- function(object, shift = NULL,
     }
   }else plt(shift,...)
 }
-
-
 

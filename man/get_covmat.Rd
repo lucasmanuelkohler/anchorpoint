@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiDimDGP.R
 \name{get_covmat}
 \alias{get_covmat}
-\title{function that gives back a covariance matrix for n dimesnions}
+\title{Function that gives back a covariance matrix for n dimesnions}
 \usage{
 get_covmat(Nr.dim, variances = 0.25, covariances = 0.125)
 }
@@ -17,5 +17,5 @@ get_covmat(Nr.dim, variances = 0.25, covariances = 0.125)
 covariance matrix of dimension Nr.dim x Nr.dim
 }
 \description{
-function that gives back a covariance matrix for n dimesnions
+Function that gives back a covariance matrix for n dimesnions
 }

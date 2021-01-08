@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{summary.anchorpoint}
 \alias{summary.anchorpoint}
-\title{summary function}
+\title{Summary function}
 \usage{
 \method{summary}{anchorpoint}(object, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{additional arguments affecting the summary produced.}
 }
 \description{
-summary function
+Summary function
 }

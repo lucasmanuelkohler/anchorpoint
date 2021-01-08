@@ -34,4 +34,3 @@ diftests <- function (obj1, obj2, anchor_items, adjust, offset = 0)
     ftest <- summary(multcomp::glht(mod, linfct = contr), test = test)
     return(list(test = ftest, itempars = cf, vcovs = vc))
 }
-

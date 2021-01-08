@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{print.summary.anchorpoint}
 \alias{print.summary.anchorpoint}
-\title{print function for summary.anchorpoint}
+\title{Print function for summary.anchorpoint}
 \usage{
 \method{print}{summary.anchorpoint}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-print function for summary.anchorpoint
+Print function for summary.anchorpoint
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiDimDGP.R
 \name{dgp_multi}
 \alias{dgp_multi}
-\title{The function dgp_multi generates (possibly) multidimensional data (only two dimensions are supported at the moment).}
+\title{Data generating process for multi dimensional rasch model (only two dimensions are supported at the moment)}
 \usage{
 dgp_multi(
   nobs,
@@ -54,5 +54,5 @@ list consisting of:
 }
 }
 \description{
-The function dgp_multi generates (possibly) multidimensional data (only two dimensions are supported at the moment).
+Data generating process for multi dimensional rasch model (only two dimensions are supported at the moment)
 }

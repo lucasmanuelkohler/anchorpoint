@@ -1,4 +1,4 @@
-#' function that gives back a covariance matrix for n dimesnions
+#' Function that gives back a covariance matrix for n dimesnions
 #' @param Nr.dim     integer - the number of dimensions
 #' @param variances  numeric, positive, <= 1, (same for all dimensions) or Nr.dim-dimensional vector - variance of each dimension
 #' @param covariances  numeric, positive, <= 1, (same for all dimensions) or choose(Nr.dim,2)-dimensional vector - covariances between dimensions
@@ -33,7 +33,7 @@ get_covmat <- function(Nr.dim,variances = 0.25,covariances = 0.125){
   }
 }
 
-#' The function dgp_multi generates (possibly) multidimensional data (only two dimensions are supported at the moment).
+#' Data generating process for multi dimensional rasch model (only two dimensions are supported at the moment)
 #'@param nobs              positive interger, number of total observations (default 1000) or positive integer vector vector of length 2, number of group observations
 #'@param tlength           positive interger, number of items (default 30)
 #'@param DIFpercent        numeric array, proportion of items which have DIF per dimension (default {0,1/3})

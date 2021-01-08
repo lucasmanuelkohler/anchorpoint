@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{getCriterionRes}
 \alias{getCriterionRes}
-\title{criterion function}
+\title{Criterion function}
 \usage{
 getCriterionRes(
   rm1,
@@ -27,5 +27,5 @@ getCriterionRes(
 a list "resultlist" which contains: grid values, criterion values, rm object, coefficients and information about generating mechanism
 }
 \description{
-criterion function
+Criterion function
 }

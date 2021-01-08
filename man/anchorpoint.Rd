@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{anchorpoint}
 \alias{anchorpoint}
-\title{anchorpoint function}
+\title{Function to produce anchorpoint objects}
 \usage{
 anchorpoint(
   rm1,
@@ -21,8 +21,15 @@ anchorpoint(
 \item{grid}{a string, specifying the grid method that is used to generated the shifts for evaluation ("symmetric" or "sparse", abbreviations are accepted)}
 }
 \value{
-an anchorpoint object containing: list with global optima, list with all results, list with the rm object
+an anchorpoint object containing:
+\itemize{
+\item list with global optima
+\item list with all results (grids and criterion values)
+\item string with used criteria
+\item string with used grids
+\item list with the rm object
+}
 }
 \description{
-anchorpoint function
+Function to produce anchorpoint objects
 }

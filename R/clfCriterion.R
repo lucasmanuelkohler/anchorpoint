@@ -1,4 +1,4 @@
-#' calculates the CLF criterion
+#' Calculates the CLF criterion
 #' @param dist distance vector
 #' @param eps shift for numerical stability (see Muthen paper)
 #' @return criterion value

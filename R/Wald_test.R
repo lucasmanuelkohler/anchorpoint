@@ -10,7 +10,6 @@ vcov.default <- function(object, ...) object$vcov
 #'@return  list containing
 #' - p: results from the test (p-values)
 #' - vcov: the covariance matrices of the fit (from diftests function)
-
 Wald_test <- function(rm1, rm2, c_shift, alias_method = c("constant4_MPT", "quasi_var", "min_dist"), alias_anchor_items = NULL, adjust = "none")
 {
 

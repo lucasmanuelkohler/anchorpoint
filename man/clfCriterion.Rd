@@ -2,7 +2,7 @@
 % Please edit documentation in R/clfCriterion.R
 \name{clfCriterion}
 \alias{clfCriterion}
-\title{calculates the CLF criterion}
+\title{Calculates the CLF criterion}
 \usage{
 clfCriterion(dist, eps = 1e-04)
 }
@@ -15,5 +15,5 @@ clfCriterion(dist, eps = 1e-04)
 criterion value
 }
 \description{
-calculates the CLF criterion
+Calculates the CLF criterion
 }
