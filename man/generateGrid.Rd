@@ -12,13 +12,13 @@ generateGrid(
 )
 }
 \arguments{
-\item{beta1}{Coefficients from first Rasch model (excluding first item, as from stats:coef call)}
+\item{beta1}{Coefficients from first Rasch model fit}
 
-\item{beta2}{Coefficients from second Rasch model (excluding first item, as from stats:coef call)}
+\item{beta2}{Coefficients from second Rasch model fit}
 
 \item{grid_method}{a string, specifying the grid method that is used to generated the shifts for evaluation ("symmetric" and/or "sparse", abbreviations are accepted)}
 
-\item{j.length}{positive integer, the granularity of the grid (default: 1000)}
+\item{j.length}{positive integer, the granularity of the symmetric grid (default: 1000)}
 }
 \value{
 A list with the selected grid methods each having two components:

@@ -9,9 +9,9 @@ checkInput(manuelInput, resp.var, group.var)
 \arguments{
 \item{manuelInput}{manual Data input as list with response matrix and grouping vector}
 
-\item{resp.var}{binary response matrix}
+\item{resp.var}{name of the binary response matrix}
 
-\item{group.var}{binary grouping vector}
+\item{group.var}{name of the binary grouping vector}
 }
 \value{
 Data ready for anchorpoint::raschFit function

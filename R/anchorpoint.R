@@ -289,7 +289,9 @@ get_results <- function(grid,shift,getTestResults,rm,metric){
 #' @param select criterion: Gini Index or CLF Criterion
 #' @param grid  grid method: symmetric or sparse
 #' @param shift  desired shift. if NULL, then the criterion maximizing is used. Can also be numeric to get desired shift. Caution: must be within grid!
-#' @return a list "resultlist" which contains: grid values, criterion values, rm object, coefficients and information about generating mechanism
+#' @return a list which contains:
+#' - a list with the results (grid values, criterion values, information about the optima)
+#' - a rm object,
 getCriterionRes <- function(rm1, rm2, select = c("Gini Index","CLF Criterion"), grid = c("symmetric","sparse"), shift = NULL){
 
   select <- match.arg(select, several.ok = TRUE)
@@ -304,17 +306,29 @@ getCriterionRes <- function(rm1, rm2, select = c("Gini Index","CLF Criterion"), 
   cf2 = c(0,stats::coef(rm$rm2))
   resultList <- list()
 
-  gridOK <- c("sparse","symmetric") %in% grid
-  names(gridOK) <- c("sparse","symmetric")
+  #not allowing shift outside the grid.
+  #however, as both the shiny app and the anchorpoint function don't allow grid values outisde, this only applies when the getCriterionRes function is used manually.
+  x_range <- list(sparse = c(min(cf1 - cf2),max(cf1 - cf2)),symmetric = c((min(cf1)-max(cf2)), max(cf1) - min(cf2)))
 
-  x_range <- list(sparse = c(min(cf1 - cf2),max(cf1 - cf2)),symmetric = c((min(cf1)-max(cf2)), max(cf1) - min(cf2)))[gridOK]
+  # correct unfeasible input - only necessary when the function getCriterionRes is used directly (as for example in the shiny app)
+  if(!all((feasibleRight <- shift<sapply(x_range,function(x)x[2]))&(feasibleLeft <- shift>sapply(x_range,function(x)x[1])))){
 
-  if(is.null(shift) || any(gridOK <- (shift<sapply(x_range,function(x)x[2]))&(shift>sapply(x_range,function(x)x[1])))){
+    out <- sapply(grid, function(x){
+      return(x_range[[x]][!c(feasibleLeft[x],feasibleRight[x])])
+    })
 
-    Grid_list <- generateGrid(beta1 = cf1,beta2 = cf2, grid_method = names(which(gridOK[grid])))
-    resultList$res <- lapply(Grid_list,FUN = get_results,shift = shift, getTestResults = TRUE,rm = rm,metric = metrics[select])
+    for(i in 1:length(out)){
+      if(length(out[[i]])>0){
+        warning(paste("shift outside",names(out)[i], "grid - changed to closest possible feasible shift",sep = " "))
+        #if both are unfeasible, the edge point agreeing with both grids should be chosen... not yet implemented.
+        shift = out[[i]]
+      }
+    }
 
-  }else stop("shift is outside grid")
+  }
+
+  Grid_list <- generateGrid(beta1 = cf1,beta2 = cf2, grid_method = grid)
+  resultList$res <- lapply(Grid_list,FUN = get_results,shift = shift, getTestResults = TRUE,rm = rm,metric = metrics[select])
 
   resultList$rm <- rm
   return(resultList)
@@ -322,7 +336,6 @@ getCriterionRes <- function(rm1, rm2, select = c("Gini Index","CLF Criterion"), 
 
 #########
 #Plot functions
-
 #' Function to produce criterion plot
 #' @param object anchorpoint object as produced by the function \code{anchorpoint}
 #' @param names list, with criterion and grid: names of the methods used.

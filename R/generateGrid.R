@@ -1,8 +1,8 @@
 #' This function generates the grid values.
-#' @param beta1 Coefficients from first Rasch model (excluding first item, as from stats:coef call)
-#' @param beta2 Coefficients from second Rasch model (excluding first item, as from stats:coef call)
+#' @param beta1 Coefficients from first Rasch model fit
+#' @param beta2 Coefficients from second Rasch model fit
 #' @param grid_method a string, specifying the grid method that is used to generated the shifts for evaluation ("symmetric" and/or "sparse", abbreviations are accepted)
-#' @param j.length positive integer, the granularity of the grid (default: 1000)
+#' @param j.length positive integer, the granularity of the symmetric grid (default: 1000)
 #' @return  A list with the selected grid methods each having two components:
 #' 1. A vector 'c_grid' with the grid values
 #' 2. A list of matrices 'betas_grid' for each grid value (length = j.length)

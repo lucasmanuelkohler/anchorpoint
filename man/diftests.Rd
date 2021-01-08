@@ -4,20 +4,16 @@
 \alias{diftests}
 \title{Extend diftests function of psychotools to include offset}
 \usage{
-diftests(obj1, obj2, anchor_items, adjust, offset = 0)
+diftests(obj1, obj2, anchor_items, adjust = "none", offset = 0)
 }
 \arguments{
-\item{obj1}{\itemize{
-\item rasch model object 1
-}}
+\item{obj1}{rasch model object 1}
 
-\item{obj2}{\itemize{
-\item rasch model object 2
-}}
+\item{obj2}{rasch model object 2}
 
 \item{anchor_items}{anchor items}
 
-\item{adjust}{p-value adjustment, (default: "none")}
+\item{adjust}{p-value adjustment}
 
 \item{offset}{offset}
 }

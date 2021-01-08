@@ -1,11 +1,11 @@
 #' Extend diftests function of psychotools to include offset
-#'@param obj1 - rasch model object 1
-#'@param obj2 - rasch model object 2
+#'@param obj1 rasch model object 1
+#'@param obj2 rasch model object 2
 #'@param anchor_items anchor items
-#'@param adjust p-value adjustment, (default: "none")
+#'@param adjust p-value adjustment
 #'@param offset offset
 #'@return list containing test results, item paramters and covariance
-diftests <- function (obj1, obj2, anchor_items, adjust, offset = 0)
+diftests <- function (obj1, obj2, anchor_items, adjust = "none", offset = 0)
 {
     if (!requireNamespace("multcomp", quietly = TRUE)) {
         stop("Package \"multcomp\" needed for this function to work. Please install it.",

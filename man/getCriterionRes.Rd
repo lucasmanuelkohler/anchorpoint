@@ -24,7 +24,11 @@ getCriterionRes(
 \item{shift}{desired shift. if NULL, then the criterion maximizing is used. Can also be numeric to get desired shift. Caution: must be within grid!}
 }
 \value{
-a list "resultlist" which contains: grid values, criterion values, rm object, coefficients and information about generating mechanism
+a list which contains:
+\itemize{
+\item a list with the results (grid values, criterion values, information about the optima)
+\item a rm object,
+}
 }
 \description{
 Criterion function

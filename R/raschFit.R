@@ -30,8 +30,8 @@ raschFit <- function(data, resp.mat.name='i', group.name='groups'){
 
 #' Function to check user-specific Input for the right format
 #' @param manuelInput manual Data input as list with response matrix and grouping vector
-#' @param resp.var  binary response matrix
-#' @param group.var binary grouping vector
+#' @param resp.var  name of the binary response matrix
+#' @param group.var name of the binary grouping vector
 #' @return Data ready for anchorpoint::raschFit function
 checkInput <- function(manuelInput,resp.var,group.var){
   if (!requireNamespace("stats", quietly = TRUE)) {
