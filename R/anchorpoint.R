@@ -506,7 +506,6 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
     }
 
     res <- standard()
-    print(res)
 
     results[seq(1:len)[-aliased_item]] <- res$pvalues[-aliased_item]
 
