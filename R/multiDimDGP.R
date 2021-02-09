@@ -33,7 +33,8 @@ get_covmat <- function(Nr.dim,variances = 0.25,covariances = 0.125){
   }
 }
 
-#' Data generating process for multidimensional Rasch model (only two dimensions are supported at the moment)
+#'@title Data generating process for multidimensional Rasch models
+#'@description Data generating process for multidimensional Rasch models (only two dimensions are supported at the moment)
 #'@param nobs              positive integer, number of total observations (default 1000) or positive integer vector vector of length 2, number of observations per group
 #'@param tlength           interger > 0, test length (number of items)
 #'@param DIFpercent        percentage of DIF items in the test
@@ -54,6 +55,8 @@ get_covmat <- function(Nr.dim,variances = 0.25,covariances = 0.125){
 #' - Theta,
 #' - DIFside: which group is favored, default focal group is favored
 #' @export
+#' @examples
+#' # For examples, see ?getData.
 #' @references
 #' - Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1).
 dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,discriminations = NULL ,difficulties = NULL,DIF_mode = "intersect",

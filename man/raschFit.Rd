@@ -24,9 +24,10 @@ two objects of class "raschmodel", produced by function \code{RaschModel.fit} of
 Fits Rasch models for the reference group 0 and the focal group 1
 }
 \examples{
-# Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+# Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 library("psychotree")
 data("SPISA")
+
 # Fit the Rasch Models for the two groups females and males
 fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
 }

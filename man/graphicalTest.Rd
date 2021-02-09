@@ -42,17 +42,20 @@ graphicalTest(
 Function to produce graphical test plot
 }
 \examples{
-#' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+# Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 library("psychotree")
 data("SPISA")
+
 # Fit the Rasch Models for the two groups females and males
 fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
-# Rasch Model fit for the first group
+
+# Rasch Model fit for the first and second group
 rm1 <- fit$rm1
-# Rasch Model fit for the second group
 rm2 <- fit$rm2
+
 # Fit an Anchorpoint object
 ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+
 # Use the Anchorpoint object to get the graphical test
 graphicalTest(ap_object)
 }

@@ -5,9 +5,10 @@
 #' @param resp.mat.name string vector, the name of the response matrix in 'data' input with 'i' as a default (as dgp).
 #' @param group.name string vector, the group name in the data frame 'data' (as dgp).
 #' @examples
-#' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' # Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 #' library("psychotree")
 #' data("SPISA")
+#'
 #' # Fit the Rasch Models for the two groups females and males
 #' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
 #' @export

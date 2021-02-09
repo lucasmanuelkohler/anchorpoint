@@ -19,6 +19,8 @@
 #' - itemfoc: item difficulty parameter for focal group
 #' - groups: group vector (factor),
 #' @export
+#' @examples
+#' # For examples, see ?getData.
 #' @references
 #' - Wang WC, Shih CL, Sun GW (2012). “The DIF-Free-Then-DIF Strategy for the Assessmentof Differential Item Functioning.”Educational and Psychological Measurement,72(4), 687–708
 dgp_uni <- function(nobs,tlength,DIFpercent,

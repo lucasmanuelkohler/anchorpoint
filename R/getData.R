@@ -15,12 +15,14 @@
 #' @examples
 #' # The number of observations
 #' nobs = 20
+#'
 #' # The number of items
 #' tlength = 10
+#'
 #' # The percentage of items to experience differential item functioning
 #' DIFpercent = 0
 #'
-#' # Create data from a unidimensional DGP:
+#' # Create data from a [uni, multi]-dimensional DGP using [type = "uni",type = "multi"]:
 #' getData(nobs, tlength, DIFpercent, type = "uni")
 getData <- function(nobs, tlength, DIFpercent, type = c("uni","multi"),...){
 

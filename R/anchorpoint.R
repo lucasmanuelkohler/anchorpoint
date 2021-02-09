@@ -141,17 +141,20 @@ print.WaldtestpV <- function(x,...) {
 #' @param shift  shift in item parameters for the second group, default NULL (for global optimum), else numeric (for user-defined shift)
 #' @param ...  further arguments for signif(x,...) (digits)
 #' @examples
-#' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' # Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 #' library("psychotree")
 #' data("SPISA")
+#'
 #' # Fit the Rasch Models for the two groups females and males
 #' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
-#' # Rasch Model fit for the first group
+#'
+#' # Rasch Model fit for the first and second group
 #' rm1 <- fit$rm1
-#' # Rasch Model fit for the second group
 #' rm2 <- fit$rm2
+#'
 #' # Fit an Anchorpoint object
 #' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#'
 #' # Obtain the Wald test p-values
 #' WaldtestpV(ap_object)
 #' @export
@@ -190,22 +193,28 @@ WaldtestpV <- function(object, shift = NULL,...) {
 #' # Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 #' library("psychotree")
 #' data("SPISA")
+#'
 #' # Fit the Rasch Models for the two groups females and males
 #' fit <- anchorpoint::raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
-#' # Rasch Model fit for the first group
+#'
+#' # Rasch Model fit for the first and second group
 #' rm1 <- fit$rm1
-#' # Rasch Model fit for the second group
 #' rm2 <- fit$rm2
+#'
 #' # Fit an Anchorpoint object
 #' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#'
 #' # inspect the Anchorpoint object
 #' # The print function summarizes the Global Optimum for the selected methods
 #' print(ap_object)
+#'
 #' # The summary function summarizes the Global Optimum for the selected methods
 #' # and shows all the other results
 #' summary(ap_object)
+#'
 #' # The plot function shows the criterion plot (criterion value vs. shifts).
 #' plot(ap_object)
+#'
 #' # To extract the criterion value and shift for a specific position on the plot,
 #' # set location_picker = TRUE and execute the command.
 #' # Then, click on the desired positions and press ESCAPE.
@@ -443,17 +452,20 @@ plotCriterion <- function(object,names,location_picker = FALSE,lty = 1,col = 1,c
 #' @param ...   further arguments for plot() like lty, cex.axis, cex.main, cex.lab etc.
 #' @export
 #' @examples
-#' #' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' # Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 #' library("psychotree")
 #' data("SPISA")
+#'
 #' # Fit the Rasch Models for the two groups females and males
 #' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
-#' # Rasch Model fit for the first group
+#'
+#' # Rasch Model fit for the first and second group
 #' rm1 <- fit$rm1
-#' # Rasch Model fit for the second group
 #' rm2 <- fit$rm2
+#'
 #' # Fit an Anchorpoint object
 #' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#'
 #' # Use the Anchorpoint object to get the graphical test
 #' graphicalTest(ap_object)
 #' @references
@@ -578,17 +590,20 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
 #' @param ask logical, ask for next plot. Default = TRUE
 #' @param ...  additional graphics arguments
 #' @examples
-#' #' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' # Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
 #' library("psychotree")
 #' data("SPISA")
+#'
 #' # Fit the Rasch Models for the two groups females and males
 #' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
-#' # Rasch Model fit for the first group
+#'
+#' # Rasch Model fit for the first and second group
 #' rm1 <- fit$rm1
-#' # Rasch Model fit for the second group
 #' rm2 <- fit$rm2
+#'
 #' # Fit an Anchorpoint object
 #' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#'
 #' # Use the Anchorpoint object to get the shift plot
 #' shiftPlot(ap_object)
 #' @export

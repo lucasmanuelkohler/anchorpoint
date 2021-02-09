@@ -57,6 +57,9 @@ list containing:
 \description{
 Data generating process for unidimensional rasch model
 }
+\examples{
+# For examples, see ?getData.
+}
 \references{
 \itemize{
 \item Wang WC, Shih CL, Sun GW (2012). “The DIF-Free-Then-DIF Strategy for the Assessmentof Differential Item Functioning.”Educational and Psychological Measurement,72(4), 687–708
