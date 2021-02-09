@@ -60,7 +60,8 @@ Data generating process for multidimensional Rasch models (only two dimensions a
 # For examples, see ?getData.
 }
 \references{
+Credit: Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1):
 \itemize{
-\item Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1).
+\item R. Philip Chalmers (2012). mirt: A Multidimensional Item Response Theory Package for the R Environment. Journal of Statistical Software, 48(6), 1-29.
 }
 }

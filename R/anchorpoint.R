@@ -469,7 +469,8 @@ plotCriterion <- function(object,names,location_picker = FALSE,lty = 1,col = 1,c
 #' # Use the Anchorpoint object to get the graphical test
 #' graphicalTest(ap_object)
 #' @references
-#' Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version:  (Version: 1.32.1).).
+#' Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version: 1.32.1):
+#' - Mair P, Hatzinger R. Extended Rasch modeling: The eRm package for the application of IRT models in R. Journal of Statistical Software. 2007;20 (9) :1-20.
 graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
                           testColors = list("not significant"="darkgreen","significant"="red3","anchor item"="black"),TestResults = NULL,ask = TRUE,...){
 

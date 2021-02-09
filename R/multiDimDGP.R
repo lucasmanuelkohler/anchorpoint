@@ -58,7 +58,8 @@ get_covmat <- function(Nr.dim,variances = 0.25,covariances = 0.125){
 #' @examples
 #' # For examples, see ?getData.
 #' @references
-#' - Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1).
+#' Credit: Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1):
+#' - R. Philip Chalmers (2012). mirt: A Multidimensional Item Response Theory Package for the R Environment. Journal of Statistical Software, 48(6), 1-29.
 dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,discriminations = NULL ,difficulties = NULL,DIF_mode = "intersect",
                       d_distr = list(mean = 0, sd = .2),MultiNorm = NULL,itemtype = 'dich'){
 

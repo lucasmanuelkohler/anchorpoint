@@ -60,5 +60,8 @@ ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
 graphicalTest(ap_object)
 }
 \references{
-Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version:  (Version: 1.32.1).).
+Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version: 1.32.1):
+\itemize{
+\item Mair P, Hatzinger R. Extended Rasch modeling: The eRm package for the application of IRT models in R. Journal of Statistical Software. 2007;20 (9) :1-20.
+}
 }
