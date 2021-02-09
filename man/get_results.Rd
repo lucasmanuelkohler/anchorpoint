@@ -18,7 +18,7 @@ get_results(grid, shift, getTestResults, rm, metric)
 \item{metric}{criterion to evaluate as a function}
 }
 \value{
-a list containing the criterion evaluated at grid points and the result of the wald test
+a list containing the criterion evaluated at grid points and the result of the Wald test
 }
 \description{
 Function to evaluate criterion values and obtain test results for a given grid and method

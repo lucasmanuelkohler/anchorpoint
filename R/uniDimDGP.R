@@ -1,16 +1,27 @@
-#' Data generating process for one dimensional rasch model
-#' @param nobs number of observations in each group (here equal)
-#' @param tlength number of items the test contains
-#' @param DIFpercent rel. frequency of DIF items in the test
+#' Data generating process for unidimensional rasch model
+#' @param nobs number of observations per group
+#' @param tlength interger > 0, test length (number of items)
+#' @param DIFpercent percentage of DIF items in the test
 #' @param DIFpattern "balanced": DIF balanced over groups "favorref","favorfoc": all DIF items favor one group
-#' @param DIFeffect data generating process for DIF effect: "normal" -> Wang(2012), "uniform" -> alternative
+#' @param DIFeffect data generating process for DIF effect:
+#' - normal:    item parameter differences are drawn at random from a normal distribution with mean DIFamount and sd = 0.1, like in Wang et al. (2012)
+#' - uniform:   item parameter differences are drawn at random from the vector \code{[DIFamount-0.4,DIFamount-0.2,DIFamount,DIFamount+0.2,DIFamount+0.4]}
+#' - constant:  item parameter differences are defined as \code{DIFamount} for all items
 #' @param DIFamount magnitude of DIF
-#' @param ability ability
-#' @param sigmaable positive numeric vector of length two (two groups), default c(1,1), standard deviation for person parameter matrix (abilities)
-#' @param itemref numeric vector of length tlength (if shorter, then sampling with replacement is used), items difficulty parameters according to Hartmann
-#' @return list containing response matrix, group assignments, DIFindex, DIFside, itemref, itemfoc
+#' @param ability should the groups differ in mean ability? (default is TRUE)
+#' @param sigmaable positive numeric vector of length two, standard deviations for person parameter distributions in the two groups (default is c(1,1))
+#' @param itemref numeric vector of length tlength (if shorter, then sampling with replacement is used), item difficulty parameter for reference group like in Wang et al. (2012)
+#' @return list containing:
+#' - dat: binary response matrix
+#' - DIFindex: indicating which items were generated with DIF
+#' - DIFside: which group is favored per item (-1 focal, 1 reference) default: focal group is favored for all items
+#' - itemref: item difficulty parameter for reference group
+#' - itemfoc: item difficulty parameter for focal group
+#' - groups: group vector (factor),
 #' @export
-dgp_single <- function(nobs,tlength,DIFpercent,
+#' @references
+#' - Wang WC, Shih CL, Sun GW (2012). “The DIF-Free-Then-DIF Strategy for the Assessmentof Differential Item Functioning.”Educational and Psychological Measurement,72(4), 687–708
+dgp_uni <- function(nobs,tlength,DIFpercent,
                        DIFpattern = "balanced",DIFeffect = "constant",DIFamount = 0.6,ability = TRUE,sigmaable=c(1,1),
 
 

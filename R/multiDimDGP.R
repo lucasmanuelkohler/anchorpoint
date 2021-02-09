@@ -33,28 +33,30 @@ get_covmat <- function(Nr.dim,variances = 0.25,covariances = 0.125){
   }
 }
 
-#' Data generating process for multi dimensional rasch model (only two dimensions are supported at the moment)
-#'@param nobs              positive interger, number of total observations (default 1000) or positive integer vector vector of length 2, number of group observations
-#'@param tlength           positive interger, number of items (default 30)
-#'@param DIFpercent        numeric array, proportion of items which have DIF per dimension (default {0,1/3})
-#'@param Nr.dim            positive interger, number of dimensions (default 2)
-#'@param Theta              matrix of the underlying ability parameters (optional)
-#'@param a.vec             numeric nobs x Nr.dim-dimensional matrix, item discrimination parameter matrix (if NA, calculated according to DIFmode & DIFpercent)
-#'@param d.vec             numeric one-dimensional vector, task difficulty matrix (if NA, calculated according to d_distr)
-#'@param DIF_mode           positive interger, number of dimensions (default 2)
-#'@param d_distr           distribution parameters normal distribution to calculate d.vec, default: mean = 0, sd = .2
-#'@param MultiNorm         list with parameters for multivariate normal which models the abilities of group 1 and group 2, respectively
+#' Data generating process for multidimensional Rasch model (only two dimensions are supported at the moment)
+#'@param nobs              positive integer, number of total observations (default 1000) or positive integer vector vector of length 2, number of observations per group
+#'@param tlength           interger > 0, test length (number of items)
+#'@param DIFpercent        percentage of DIF items in the test
+#'@param Nr.dim            positive integer, number of dimensions (default 2)
+#'@param Theta             matrix of the underlying ability parameters (optional)
+#'@param discriminations   binary matrix of size tlength x Nr.dim, item discrimination parameter matrix
+#'@param difficulties      numeric vector of length tlength, item difficulty vector
+#'@param DIF_mode          string, mode how DIF items are created, default: intersect.
+#'@param d_distr           d_distr: parameters for normal distribution to generate item difficulties difficulties, default: mean = 0, sd = .2
+#'@param MultiNorm         list with parameters for multivariate normal distribution to generate the abilities of the test takers in group 1 and group 2, respectively.
 #'@param itemtype          type of items (default "dich" which corresponds to multidimensional Rasch model items)
 #'@return list consisting of:
-#' - binary response matrix
-#' - group vector (factor),
-#' - a.vec,
-#' - d.vec,
-#' - DIFindex,
+#' - dat: binary response matrix
+#' - groups: group vector (factor),
+#' - discriminations: binary matrix containing the item discrimination parameter matrix,
+#' - difficulties: item difficulty vector,
+#' - DIFindex: indicating which items were generated with DIF,
 #' - Theta,
-#' - DIFside
+#' - DIFside: which group is favored, default focal group is favored
 #' @export
-dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,a.vec = NULL ,d.vec = NULL,DIF_mode = "intersect",
+#' @references
+#' - Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1).
+dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,discriminations = NULL ,difficulties = NULL,DIF_mode = "intersect",
                       d_distr = list(mean = 0, sd = .2),MultiNorm = NULL,itemtype = 'dich'){
 
   if (!requireNamespace("stats", quietly = TRUE)) {
@@ -76,8 +78,8 @@ dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,a.vec = NU
   stopifnot(all(nobs > 0))
   stopifnot(all(DIFpercent >= 0))
   stopifnot(Nr.dim > 0)
-  stopifnot(all(!is.na(a.vec)))
-  stopifnot(all(!is.na(d.vec)))
+  stopifnot(all(!is.na(discriminations)))
+  stopifnot(all(!is.na(difficulties)))
   stopifnot(DIF_mode %in% c("intersect","disjoint"))
   stopifnot(names(d_distr) %in% c("mean","sd") && (is.numeric(d_distr$mean) & is.numeric(d_distr$sd) & d_distr$sd>0))
 
@@ -88,14 +90,14 @@ dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,a.vec = NU
   stopifnot(all(c(c(Nr.dim,Nr.dim) == dim(MultiNorm[[1]][[2]])||length(MultiNorm[[1]][[2]])==2,
                   c(Nr.dim,Nr.dim) == dim(MultiNorm[[2]][[2]])|| length(MultiNorm[[2]][[2]])==2)))
 
-  # Compute a.vec if not hardcoded
-  if(is.null(a.vec)){
-    a.vec <- getItemDiscrimination(dimensions = Nr.dim, DIFpercent = DIFpercent, tlength = tlength,DIF_mode = DIF_mode)
+  # Compute discriminations if not hardcoded
+  if(is.null(discriminations)){
+    discriminations <- getItemDiscrimination(dimensions = Nr.dim, DIFpercent = DIFpercent, tlength = tlength,DIF_mode = DIF_mode)
   }
 
-  # Compute d.vec if not hardcoded
-  if(is.null(d.vec)){
-    d.vec = stats::rnorm(mean = d_distr$mean,sd = d_distr$sd,n = tlength)
+  # Compute difficulties if not hardcoded
+  if(is.null(difficulties)){
+    difficulties = stats::rnorm(mean = d_distr$mean,sd = d_distr$sd,n = tlength)
   }
 
   if(is.null(Theta)){
@@ -116,15 +118,15 @@ dgp_multi <- function(nobs,tlength,DIFpercent,Nr.dim = 2,Theta = NULL,a.vec = NU
   }
 
   # Compute Data
-  data = mirt::simdata(a = a.vec,d = d.vec,Theta = Theta,itemtype = itemtype,returnList = T)
+  data = mirt::simdata(a = discriminations,d = difficulties,Theta = Theta,itemtype = itemtype,returnList = T)
 
-  DIFindex = which(rowSums(as.matrix(a.vec[,2:Nr.dim]))>0)
+  DIFindex = which(rowSums(as.matrix(discriminations[,2:Nr.dim]))>0)
   DIFside = rep(0,tlength)
   DIFside[DIFindex] = -1
 
   # Aggregate and return data
   return(list(dat = data.frame(i = I(data$data),groups = factor(c(rep(0,nobs[1]),rep(1,nobs[2])))),
-              a = a.vec, d = d.vec,DIFindex = DIFindex,Theta = Theta,DIFside = DIFside))
+              discriminations = discriminations, difficulties = difficulties,DIFindex = DIFindex,Theta = Theta,DIFside = DIFside))
 
 }
 

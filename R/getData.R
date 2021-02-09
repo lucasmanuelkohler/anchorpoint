@@ -1,16 +1,28 @@
-#' Simulate data from one dimensional or multidimensional DGP
+#' @title Simulate data from unidimensional or multidimensional DGP
+#' @description
+#' Simulate data from unidimensional or multidimensional Rasch model and two groups of test takers.
 #' @param nobs positive integer, number of observations
-#' @param tlength positive integer, number of items
-#' @param DIFpercent non-negative double <= 1, DIF percentage
-#' @param type string specifying which DGP to use ("single" or "multi")
+#' @param tlength interger > 0, test length (number of items)
+#' @param DIFpercent percentage of DIF items in the test
+#' @param type string specifying which DGP to use ("uni" or "multi")
 #' @param ... additional arguments:
-#' - For single-dimensional DGP, check ?anchorpoint::dgp_single
-#' - For multi-dimensional DGP, check ?anchorpoint::dgp_multi
-#' @return a list containing
+#' - For unidimensional DGP, check ?anchorpoint:::dgp_uni
+#' - For multidimensional DGP, check ?anchorpoint:::dgp_multi
+#' @return a list containing:
 #' - DGP: simulated data
-#' - RM: Rasch Model objects
+#' - RM: Rasch Model objects for the two groups of test takers
 #' @export
-getData <- function(nobs, tlength, DIFpercent, type = c("single","multi"),...){
+#' @examples
+#' # The number of observations
+#' nobs = 20
+#' # The number of items
+#' tlength = 10
+#' # The percentage of items to experience differential item functioning
+#' DIFpercent = 0
+#'
+#' # Create data from a unidimensional DGP:
+#' getData(nobs, tlength, DIFpercent, type = "uni")
+getData <- function(nobs, tlength, DIFpercent, type = c("uni","multi"),...){
 
   nobs <- as.integer(nobs)
   tlength <- as.integer(tlength)
@@ -21,13 +33,13 @@ getData <- function(nobs, tlength, DIFpercent, type = c("single","multi"),...){
 
   type <- match.arg(type)
   DGP <- switch(type,
-               #multi dimensional
+               #multidimensional
                multi={
                  dgp_multi(nobs = nobs, tlength = tlength, DIFpercent = DIFpercent,...)
                },
-                # single dimensional
-               single={
-                 dgp_single(nobs = nobs, tlength = tlength, DIFpercent = DIFpercent,...)
+                #unidimensional
+               uni={
+                 dgp_uni(nobs = nobs, tlength = tlength, DIFpercent = DIFpercent,...)
                },
                {
                  #statements actually can not be reach, as match.arg would already fail..

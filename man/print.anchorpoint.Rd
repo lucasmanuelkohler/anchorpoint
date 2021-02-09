@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{print.anchorpoint}
 \alias{print.anchorpoint}
-\title{Print function}
+\title{Print function summarizes the}
 \usage{
 \method{print}{anchorpoint}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{further arguments passed to or from other methods (e.g. digits for rounding).}
 }
 \description{
-Print function
+Print function summarizes the
 }

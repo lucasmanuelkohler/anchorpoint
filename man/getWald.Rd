@@ -9,7 +9,7 @@ getWald(rm, shift)
 \arguments{
 \item{rm}{A list containing the two Rasch Model objects of group 0 and group 1}
 
-\item{shift}{The desired shift of the second group}
+\item{shift}{Shift in item parameters for the second group}
 }
 \value{
 A list containing the output of the function Wald_test():

@@ -2,18 +2,23 @@
 % Please edit documentation in R/clfCriterion.R
 \name{clfCriterion}
 \alias{clfCriterion}
-\title{Calculates the CLF criterion}
+\title{Calculates the CLF criterion employed by Asparouhov and Muthén}
 \usage{
 clfCriterion(dist, eps = 1e-04)
 }
 \arguments{
 \item{dist}{distance vector}
 
-\item{eps}{shift for numerical stability (see Muthen paper)}
+\item{eps}{shift for numerical stability}
 }
 \value{
 criterion value
 }
 \description{
-Calculates the CLF criterion
+Calculates the CLF criterion employed by Asparouhov and Muthén
+}
+\references{
+\itemize{
+\item Asparouhov, T. & Muthén, B. (2014). Multiple-group factor analysis alignment. Structural Equation Modeling: A Multidisciplinary Journal, 21:4, 495-508
+}
 }

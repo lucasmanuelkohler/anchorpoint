@@ -9,8 +9,8 @@ graphicalTest(
   shift = NULL,
   highlight = NULL,
   alpha = 0.05,
-  testColors = list(`not significant` = "darkgreen", significant = "red3", `anchor\\n  
-                                             item` = "black"),
+  testColors = list(`not significant` = "darkgreen", significant = "red3", `anchor
+    item` = "black"),
   TestResults = NULL,
   ask = TRUE,
   ...
@@ -19,9 +19,9 @@ graphicalTest(
 \arguments{
 \item{object}{anchorpoint object as produced by the function \code{anchorpoint}}
 
-\item{shift}{numeric, shift which is applied, default NULL (global optimum)}
+\item{shift}{shift in item parameters for the second group, default NULL (for global optimum), else numeric (for user-defined shift)}
 
-\item{highlight}{positive integer, items to be highlighted (invalid items are excluded).}
+\item{highlight}{positive integer(s), numbers of the items to be highlighted}
 
 \item{alpha}{significance level for DIF test}
 
@@ -32,13 +32,30 @@ graphicalTest(
 \item "anchor item" = "black"
 }}
 
-\item{TestResults}{waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.}
+\item{TestResults}{Waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.}
 
 \item{ask}{logical, ask for next plot. Default = TRUE}
 
-\item{...}{further arguments for plot() like lty, cex.axis, cex.main, cex.lab etc.
-credit: some code is adapted from the function plotGOF of the R package eRm.}
+\item{...}{further arguments for plot() like lty, cex.axis, cex.main, cex.lab etc.}
 }
 \description{
 Function to produce graphical test plot
+}
+\examples{
+#' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+library("psychotree")
+data("SPISA")
+# Fit the Rasch Models for the two groups females and males
+fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+# Rasch Model fit for the first group
+rm1 <- fit$rm1
+# Rasch Model fit for the second group
+rm2 <- fit$rm2
+# Fit an Anchorpoint object
+ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+# Use the Anchorpoint object to get the graphical test
+graphicalTest(ap_object)
+}
+\references{
+Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version:  (Version: 1.32.1).).
 }

@@ -11,8 +11,11 @@ plot.anchorpoint <- function(x,ask = T,location_picker = FALSE,...) {
   if (!inherits(x, "anchorpoint"))
     stop("use only with \"anchorpoint\" objects")
 
-  oask <- grDevices::devAskNewPage(TRUE)
-  on.exit(grDevices::devAskNewPage(oask))
+
+  if(ask & (length(x$criterion) > 1 || length(x$grid) > 1)){
+    oask <- grDevices::devAskNewPage(TRUE)
+    on.exit(grDevices::devAskNewPage(oask))
+  }
 
   out <- list()
   temp <- x$all_results
@@ -46,7 +49,7 @@ print.plot.anchorpoint <- function(x,...) {
   }
 }
 
-#' Print function
+#' Print function summarizes the
 #' @param x anchorpoint object as produced by the function \code{anchorpoint}
 #' @param ... further arguments passed to or from other methods (e.g. digits for rounding).
 #' @export
@@ -109,13 +112,13 @@ summary.anchorpoint <- function(object,...) {
   ans
 }
 
-#' Print function for waldtestpV object
-#' @param x  waldtest object
+#' Print function for WaldtestpV object
+#' @param x  Wald test object
 #' @param ... further arguments passed to or from other methods.
 #' @export
-print.waldtestpV <- function(x,...) {
-  if (!inherits(x, "waldtestpV"))
-    stop("use only with \"waldtestpV\" objects")
+print.WaldtestpV <- function(x,...) {
+  if (!inherits(x, "WaldtestpV"))
+    stop("use only with \"WaldtestpV\" objects")
 
   if("shift" %in% names(x)){
     cat(paste("Wald test p-values for shift = ",x$shift,":",sep = ""),"\n")
@@ -133,12 +136,26 @@ print.waldtestpV <- function(x,...) {
 
 }
 
-#' Function to get waldtest p-value results
+#' Function to get Wald test p-value results
 #' @param object anchorpoint object as produced by the function \code{anchorpoint}
-#' @param shift  shift, default NULL (global optimum), else numeric
+#' @param shift  shift in item parameters for the second group, default NULL (for global optimum), else numeric (for user-defined shift)
 #' @param ...  further arguments for signif(x,...) (digits)
+#' @examples
+#' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' library("psychotree")
+#' data("SPISA")
+#' # Fit the Rasch Models for the two groups females and males
+#' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+#' # Rasch Model fit for the first group
+#' rm1 <- fit$rm1
+#' # Rasch Model fit for the second group
+#' rm2 <- fit$rm2
+#' # Fit an Anchorpoint object
+#' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#' # Obtain the Wald test p-values
+#' WaldtestpV(ap_object)
 #' @export
-waldtestpV <- function(object, shift = NULL,...) {
+WaldtestpV <- function(object, shift = NULL,...) {
 
   out<- list()
   if(!is.null(shift) && is.numeric(shift)){
@@ -152,22 +169,49 @@ waldtestpV <- function(object, shift = NULL,...) {
       }
     }
   }
-  class(out) <- "waldtestpV"
+  class(out) <- "WaldtestpV"
   out
 }
 
-#' Function to produce anchorpoint objects
-#' @param rm1 Fitted Rasch Model object corresponding to the first group. Object is of class "raschmodel", produced by function \code{RaschModel.fit} of the package \pkg{psychotools}.
-#' @param rm2  Fitted Rasch Model object corresponding to the second group. Object is of class "raschmodel", produced by function \code{RaschModel.fit} of the package \pkg{psychotools}.
+#' @title Function to produce anchorpoint objects
+#' @description Function to conduct the anchor point selection method of Strobl et al. (2021)
+#' @param rm1 Fitted Rasch Model object for the first group of test takers
+#' @param rm2 Fitted Rasch Model object for the second group of test takers
 #' @param select a string, specifying the criterion that is evaluated ("CLF Criterion" or "Gini Index", abbreviations are accepted)
-#' @param grid a string, specifying the grid method that is used to generated the shifts for evaluation ("symmetric" or "sparse", abbreviations are accepted)
+#' @param grid a string, specifying the method that is used to generate the grid of possible shifts to be evaluated
 #' @return an anchorpoint object containing:
-#' - list with global optima
-#' - list with all results (grids and criterion values)
+#' - list with results for global optimum (single grid value and criterion value)
+#' - list with all results (all grid values and criterion values)
 #' - string with used criteria
-#' - string with used grids
-#' - list with the rm object
+#' - string with used grid methods
+#' - list with Rasch Model objects for both groups of test takers
 #' @export
+#' @examples
+#' # Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
+#' library("psychotree")
+#' data("SPISA")
+#' # Fit the Rasch Models for the two groups females and males
+#' fit <- anchorpoint::raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+#' # Rasch Model fit for the first group
+#' rm1 <- fit$rm1
+#' # Rasch Model fit for the second group
+#' rm2 <- fit$rm2
+#' # Fit an Anchorpoint object
+#' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#' # inspect the Anchorpoint object
+#' # The print function summarizes the Global Optimum for the selected methods
+#' print(ap_object)
+#' # The summary function summarizes the Global Optimum for the selected methods
+#' # and shows all the other results
+#' summary(ap_object)
+#' # The plot function shows the criterion plot (criterion value vs. shifts).
+#' plot(ap_object)
+#' # To extract the criterion value and shift for a specific position on the plot,
+#' # set location_picker = TRUE and execute the command.
+#' # Then, click on the desired positions and press ESCAPE.
+#' plot(ap_object, location_picker = TRUE)
+#' @references
+#' - Strobl, C., Kopf, J., Kohler, L., von Oertzen, T. & Zeileis, A. (2021). Anchor point selection: An approach for anchoring without anchor items. Applied Psychological Measurement, to appear.
 anchorpoint <- function(rm1, rm2, select = c("CLF Criterion","Gini Index"), grid = c("symmetric", "sparse")){
 
   select <- match.arg(select, several.ok = TRUE)
@@ -232,7 +276,7 @@ anchorpoint <- function(rm1, rm2, select = c("CLF Criterion","Gini Index"), grid
 #' @param getTestResults  logic, whether test should be applied
 #' @param rm  list containing the two Rasch Model corresponding two group 0 and 1
 #' @param metric  criterion to evaluate as a function
-#' @return a list containing the criterion evaluated at grid points and the result of the wald test
+#' @return a list containing the criterion evaluated at grid points and the result of the Wald test
 get_results <- function(grid,shift,getTestResults,rm,metric){
 
   out <- lapply(metric,function(metric){
@@ -273,7 +317,7 @@ get_results <- function(grid,shift,getTestResults,rm,metric){
     if(getTestResults){
       if(!all(is.na(rm))){
         TestResults = getWald(rm,shift = shift)$p
-      }else warning("Need rasch model object to perform wald test. Set argument getTestResults in criterion_plot() to FALSE to avoid warning message.")
+      }else warning("Need rasch model object to perform Wald test. Set argument getTestResults in criterion_plot() to FALSE to avoid warning message.")
     }
     criterion_values$cshift = data.frame(shift = shift,idx = idx,value = value)
 
@@ -385,24 +429,37 @@ plotCriterion <- function(object,names,location_picker = FALSE,lty = 1,col = 1,c
   }
 }
 
-
 #' Function to produce graphical test plot
 #' @param object anchorpoint object as produced by the function \code{anchorpoint}
-#' @param shift   numeric, shift which is applied, default NULL (global optimum)
-#' @param highlight  positive integer, items to be highlighted (invalid items are excluded).
+#' @param shift shift in item parameters for the second group, default NULL (for global optimum), else numeric (for user-defined shift)
+#' @param highlight positive integer(s), numbers of the items to be highlighted
 #' @param alpha   significance level for DIF test
 #' @param testColors  list with colors for the items:
 #' - "not significant" = "darkgreen"
 #' - "significant" = "red3"
 #' - "anchor item" = "black"
-#' @param TestResults  waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.
+#' @param TestResults  Waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.
 #' @param ask logical, ask for next plot. Default = TRUE
 #' @param ...   further arguments for plot() like lty, cex.axis, cex.main, cex.lab etc.
-#' credit: some code is adapted from the function plotGOF of the R package eRm.
 #' @export
+#' @examples
+#' #' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' library("psychotree")
+#' data("SPISA")
+#' # Fit the Rasch Models for the two groups females and males
+#' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+#' # Rasch Model fit for the first group
+#' rm1 <- fit$rm1
+#' # Rasch Model fit for the second group
+#' rm2 <- fit$rm2
+#' # Fit an Anchorpoint object
+#' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#' # Use the Anchorpoint object to get the graphical test
+#' graphicalTest(ap_object)
+#' @references
+#' Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version:  (Version: 1.32.1).).
 graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
-                          testColors = list("not significant"="darkgreen","significant"="red3","anchor
-                                            item"="black"),TestResults = NULL,ask = TRUE,...){
+                          testColors = list("not significant"="darkgreen","significant"="red3","anchor item"="black"),TestResults = NULL,ask = TRUE,...){
 
   if (!inherits(object, "anchorpoint"))
     stop("use only with \"anchorpoint\" objects")
@@ -410,7 +467,7 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
   # Do plot with a specific shift
   plt <- function(shift,...){
     stopifnot("Shift must be numeric" = is.numeric(shift))
-    if (!inherits(TestResults, "waldtest")) TestResults <- getWald(object$rm,shift = shift)
+    if (!inherits(TestResults, "Waldtest")) TestResults <- getWald(object$rm,shift = shift)
     beta1 <- c(0, stats::coef(object$rm$rm1))
     cf2 <- c(0, stats::coef(object$rm$rm2))
     beta2 <- cf2 + shift
@@ -489,7 +546,7 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
   }
 
   if(is.null(shift)){
-    if(ask){
+    if(ask & (length(object$criterion) > 1 || length(object$grid) > 1)){
       oask <- grDevices::devAskNewPage(TRUE)
       on.exit(grDevices::devAskNewPage(oask))
     }
@@ -502,9 +559,9 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
   }else plt(shift,...)
 }
 
-#' Function to produce shift Plot
+#' Function to produce a shift plot
 #' @param object anchorpoint object as produced by the function \code{anchorpoint}
-#' @param shift   numeric, shift which is applied
+#' @param shift shift in item parameters for the second group, default NULL (for global optimum), else numeric (for user-defined shift)
 #' @param testColors  list with colors for the items:
 #' - "not significant" = "darkgreen"
 #' - "significant" = "red3"
@@ -514,12 +571,26 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
 #' - "significant" = 22
 #' - "anchor item" = 23
 #' @param addLegend  logic, add a legend to the plot, default: False
-#' @param highlight  positive integer, items to be highlighted (invalid items are excluded).
+#' @param highlight  positive integer(s), numbers of the items to be highlighted
 #' @param digits  positive integer, controls rounding of the shift in title
 #' @param cex.legend  numeric,  controls size of legend
-#' @param TestResults  waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.
+#' @param TestResults  Waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.
 #' @param ask logical, ask for next plot. Default = TRUE
 #' @param ...  additional graphics arguments
+#' @examples
+#' #' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+#' library("psychotree")
+#' data("SPISA")
+#' # Fit the Rasch Models for the two groups females and males
+#' fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+#' # Rasch Model fit for the first group
+#' rm1 <- fit$rm1
+#' # Rasch Model fit for the second group
+#' rm2 <- fit$rm2
+#' # Fit an Anchorpoint object
+#' ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+#' # Use the Anchorpoint object to get the shift plot
+#' shiftPlot(ap_object)
 #' @export
 shiftPlot <- function(object, shift = NULL,
                       testColors = list("not significant"="darkgreen","significant"="red3","anchor item"="black"),
@@ -545,7 +616,7 @@ shiftPlot <- function(object, shift = NULL,
       }
     }
 
-    if (!inherits(TestResults, "waldtest")) TestResults <- getWald(object$rm,shift = shift)
+    if (!inherits(TestResults, "Waldtest")) TestResults <- getWald(object$rm,shift = shift)
 
     col = rep(testColors$`not significant`,length(cf2))
     col[significant <- which(TestResults$p<=0.05)] = testColors$significant
@@ -589,7 +660,7 @@ shiftPlot <- function(object, shift = NULL,
   }
 
   if(is.null(shift)){
-    if(ask){
+    if(ask & (length(object$criterion) > 1 || length(object$grid) > 1)){
       oask <- grDevices::devAskNewPage(TRUE)
       on.exit(grDevices::devAskNewPage(oask))
     }

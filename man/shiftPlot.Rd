@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchorpoint.R
 \name{shiftPlot}
 \alias{shiftPlot}
-\title{Function to produce shift Plot}
+\title{Function to produce a shift plot}
 \usage{
 shiftPlot(
   object,
@@ -22,7 +22,7 @@ shiftPlot(
 \arguments{
 \item{object}{anchorpoint object as produced by the function \code{anchorpoint}}
 
-\item{shift}{numeric, shift which is applied}
+\item{shift}{shift in item parameters for the second group, default NULL (for global optimum), else numeric (for user-defined shift)}
 
 \item{testColors}{list with colors for the items:
 \itemize{
@@ -40,18 +40,33 @@ shiftPlot(
 
 \item{addLegend}{logic, add a legend to the plot, default: False}
 
-\item{highlight}{positive integer, items to be highlighted (invalid items are excluded).}
+\item{highlight}{positive integer(s), numbers of the items to be highlighted}
 
 \item{digits}{positive integer, controls rounding of the shift in title}
 
 \item{cex.legend}{numeric,  controls size of legend}
 
-\item{TestResults}{waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.}
+\item{TestResults}{Waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.}
 
 \item{ask}{logical, ask for next plot. Default = TRUE}
 
 \item{...}{additional graphics arguments}
 }
 \description{
-Function to produce shift Plot
+Function to produce a shift plot
+}
+\examples{
+#' # Load the SPISA data set (general knowledge quiz - more information at ?psychotree::SPISA)
+library("psychotree")
+data("SPISA")
+# Fit the Rasch Models for the two groups females and males
+fit <- raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+# Rasch Model fit for the first group
+rm1 <- fit$rm1
+# Rasch Model fit for the second group
+rm2 <- fit$rm2
+# Fit an Anchorpoint object
+ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+# Use the Anchorpoint object to get the shift plot
+shiftPlot(ap_object)
 }

@@ -14,9 +14,9 @@ getItemDiscrimination(
 \arguments{
 \item{dimensions}{integer specifying the number of dimensions used in dgp (currently only 2 are allowed)}
 
-\item{DIFpercent}{numeric, quantifying DIF percentage}
+\item{DIFpercent}{percentage of DIF items in the test}
 
-\item{tlength}{positive integer specifying the number of items}
+\item{tlength}{interger > 0, test length (number of items)}
 
 \item{DIF_mode}{character vector specifying the mode how to create the matrix:
 \itemize{

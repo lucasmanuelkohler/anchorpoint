@@ -20,7 +20,10 @@ Imports:
     graphics,
     scales,
     psychotools,
-    multcomp
+    multcomp,
+	Rdpack
+RdMacros: Rdpack
 Suggests: 
+    psychotree,
     qvcalc,
     mirt

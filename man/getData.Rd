@@ -2,32 +2,43 @@
 % Please edit documentation in R/getData.R
 \name{getData}
 \alias{getData}
-\title{Simulate data from one dimensional or multidimensional DGP}
+\title{Simulate data from unidimensional or multidimensional DGP}
 \usage{
-getData(nobs, tlength, DIFpercent, type = c("single", "multi"), ...)
+getData(nobs, tlength, DIFpercent, type = c("uni", "multi"), ...)
 }
 \arguments{
 \item{nobs}{positive integer, number of observations}
 
-\item{tlength}{positive integer, number of items}
+\item{tlength}{interger > 0, test length (number of items)}
 
-\item{DIFpercent}{non-negative double <= 1, DIF percentage}
+\item{DIFpercent}{percentage of DIF items in the test}
 
-\item{type}{string specifying which DGP to use ("single" or "multi")}
+\item{type}{string specifying which DGP to use ("uni" or "multi")}
 
 \item{...}{additional arguments:
 \itemize{
-\item For single-dimensional DGP, check ?anchorpoint::dgp_single
-\item For multi-dimensional DGP, check ?anchorpoint::dgp_multi
+\item For unidimensional DGP, check ?anchorpoint:::dgp_uni
+\item For multidimensional DGP, check ?anchorpoint:::dgp_multi
 }}
 }
 \value{
-a list containing
+a list containing:
 \itemize{
 \item DGP: simulated data
-\item RM: Rasch Model objects
+\item RM: Rasch Model objects for the two groups of test takers
 }
 }
 \description{
-Simulate data from one dimensional or multidimensional DGP
+Simulate data from unidimensional or multidimensional Rasch model and two groups of test takers.
+}
+\examples{
+# The number of observations
+nobs = 20
+# The number of items
+tlength = 10
+# The percentage of items to experience differential item functioning
+DIFpercent = 0
+
+# Create data from a unidimensional DGP:
+getData(nobs, tlength, DIFpercent, type = "uni")
 }

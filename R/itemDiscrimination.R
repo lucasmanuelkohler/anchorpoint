@@ -1,7 +1,7 @@
 #' Function to create a item discrimination parameter matrix
 #' @param dimensions  integer specifying the number of dimensions used in dgp (currently only 2 are allowed)
-#' @param DIFpercent  numeric, quantifying DIF percentage
-#' @param tlength     positive integer specifying the number of items
+#' @param DIFpercent  percentage of DIF items in the test
+#' @param tlength     interger > 0, test length (number of items)
 #' @param DIF_mode    character vector specifying the mode how to create the matrix:
 #' - "intersect":       all items load on the first, length*DIFpercent items also on the second
 #' - "disjoint":        ceiling(tlength*DIFpercent) items load on the first, the rest on the second, where ceiling rounds the number up to the next integer

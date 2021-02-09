@@ -1,0 +1,16 @@
+citHeader("To cite anchorpoint in publications use:")
+
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Article",
+         title = "Anchor point selection: An approach for anchoring without anchor items",
+         author = c(person("Carolin", "Strobl"),
+                    person("Julia", "Koch"),
+                    person("Lucas", "Kohler"),
+                    person("Timo", "von Oertzen"),
+                    person("Achim", "Zeileis")),
+         year = 2021,
+         note = note,
+	 journal = "Applied Psychological Measurement",
+	 volume = "to appear"
+)

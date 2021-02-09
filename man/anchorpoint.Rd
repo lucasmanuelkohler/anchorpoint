@@ -12,24 +12,54 @@ anchorpoint(
 )
 }
 \arguments{
-\item{rm1}{Fitted Rasch Model object corresponding to the first group. Object is of class "raschmodel", produced by function \code{RaschModel.fit} of the package \pkg{psychotools}.}
+\item{rm1}{Fitted Rasch Model object for the first group of test takers}
 
-\item{rm2}{Fitted Rasch Model object corresponding to the second group. Object is of class "raschmodel", produced by function \code{RaschModel.fit} of the package \pkg{psychotools}.}
+\item{rm2}{Fitted Rasch Model object for the second group of test takers}
 
 \item{select}{a string, specifying the criterion that is evaluated ("CLF Criterion" or "Gini Index", abbreviations are accepted)}
 
-\item{grid}{a string, specifying the grid method that is used to generated the shifts for evaluation ("symmetric" or "sparse", abbreviations are accepted)}
+\item{grid}{a string, specifying the method that is used to generate the grid of possible shifts to be evaluated}
 }
 \value{
 an anchorpoint object containing:
 \itemize{
-\item list with global optima
-\item list with all results (grids and criterion values)
+\item list with results for global optimum (single grid value and criterion value)
+\item list with all results (all grid values and criterion values)
 \item string with used criteria
-\item string with used grids
-\item list with the rm object
+\item string with used grid methods
+\item list with Rasch Model objects for both groups of test takers
 }
 }
 \description{
-Function to produce anchorpoint objects
+Function to conduct the anchor point selection method of Strobl et al. (2021)
+}
+\examples{
+# Load the SPISA data set (general knowledge quiz - more information at ?SPISA)
+library("psychotree")
+data("SPISA")
+# Fit the Rasch Models for the two groups females and males
+fit <- anchorpoint::raschFit(SPISA, resp.mat.name='spisa', group.name='gender')
+# Rasch Model fit for the first group
+rm1 <- fit$rm1
+# Rasch Model fit for the second group
+rm2 <- fit$rm2
+# Fit an Anchorpoint object
+ap_object <- anchorpoint(rm1,rm2,select = "Gini Index", grid = "sparse")
+# inspect the Anchorpoint object
+# The print function summarizes the Global Optimum for the selected methods
+print(ap_object)
+# The summary function summarizes the Global Optimum for the selected methods
+# and shows all the other results
+summary(ap_object)
+# The plot function shows the criterion plot (criterion value vs. shifts).
+plot(ap_object)
+# To extract the criterion value and shift for a specific position on the plot,
+# set location_picker = TRUE and execute the command.
+# Then, click on the desired positions and press ESCAPE.
+plot(ap_object, location_picker = TRUE)
+}
+\references{
+\itemize{
+\item Strobl, C., Kopf, J., Kohler, L., von Oertzen, T. & Zeileis, A. (2021). Anchor point selection: An approach for anchoring without anchor items. Applied Psychological Measurement, to appear.
+}
 }

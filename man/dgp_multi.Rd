@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiDimDGP.R
 \name{dgp_multi}
 \alias{dgp_multi}
-\title{Data generating process for multi dimensional rasch model (only two dimensions are supported at the moment)}
+\title{Data generating process for multidimensional Rasch model (only two dimensions are supported at the moment)}
 \usage{
 dgp_multi(
   nobs,
@@ -10,8 +10,8 @@ dgp_multi(
   DIFpercent,
   Nr.dim = 2,
   Theta = NULL,
-  a.vec = NULL,
-  d.vec = NULL,
+  discriminations = NULL,
+  difficulties = NULL,
   DIF_mode = "intersect",
   d_distr = list(mean = 0, sd = 0.2),
   MultiNorm = NULL,
@@ -19,40 +19,45 @@ dgp_multi(
 )
 }
 \arguments{
-\item{nobs}{positive interger, number of total observations (default 1000) or positive integer vector vector of length 2, number of group observations}
+\item{nobs}{positive integer, number of total observations (default 1000) or positive integer vector vector of length 2, number of observations per group}
 
-\item{tlength}{positive interger, number of items (default 30)}
+\item{tlength}{interger > 0, test length (number of items)}
 
-\item{DIFpercent}{numeric array, proportion of items which have DIF per dimension (default {0,1/3})}
+\item{DIFpercent}{percentage of DIF items in the test}
 
-\item{Nr.dim}{positive interger, number of dimensions (default 2)}
+\item{Nr.dim}{positive integer, number of dimensions (default 2)}
 
 \item{Theta}{matrix of the underlying ability parameters (optional)}
 
-\item{a.vec}{numeric nobs x Nr.dim-dimensional matrix, item discrimination parameter matrix (if NA, calculated according to DIFmode & DIFpercent)}
+\item{discriminations}{binary matrix of size tlength x Nr.dim, item discrimination parameter matrix}
 
-\item{d.vec}{numeric one-dimensional vector, task difficulty matrix (if NA, calculated according to d_distr)}
+\item{difficulties}{numeric vector of length tlength, item difficulty vector}
 
-\item{DIF_mode}{positive interger, number of dimensions (default 2)}
+\item{DIF_mode}{string, mode how DIF items are created, default: intersect.}
 
-\item{d_distr}{distribution parameters normal distribution to calculate d.vec, default: mean = 0, sd = .2}
+\item{d_distr}{d_distr: parameters for normal distribution to generate item difficulties difficulties, default: mean = 0, sd = .2}
 
-\item{MultiNorm}{list with parameters for multivariate normal which models the abilities of group 1 and group 2, respectively}
+\item{MultiNorm}{list with parameters for multivariate normal distribution to generate the abilities of the test takers in group 1 and group 2, respectively.}
 
 \item{itemtype}{type of items (default "dich" which corresponds to multidimensional Rasch model items)}
 }
 \value{
 list consisting of:
 \itemize{
-\item binary response matrix
-\item group vector (factor),
-\item a.vec,
-\item d.vec,
-\item DIFindex,
+\item dat: binary response matrix
+\item groups: group vector (factor),
+\item discriminations: binary matrix containing the item discrimination parameter matrix,
+\item difficulties: item difficulty vector,
+\item DIFindex: indicating which items were generated with DIF,
 \item Theta,
-\item DIFside
+\item DIFside: which group is favored, default focal group is favored
 }
 }
 \description{
-Data generating process for multi dimensional rasch model (only two dimensions are supported at the moment)
+Data generating process for multidimensional Rasch model (only two dimensions are supported at the moment)
+}
+\references{
+\itemize{
+\item Data is generated using the function simdata from \pkg{mirt} (Version: 1.32.1).
+}
 }
