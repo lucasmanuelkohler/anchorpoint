@@ -9,8 +9,8 @@ graphicalTest(
   shift = NULL,
   highlight = NULL,
   alpha = 0.05,
-  testColors = list(`not significant` = "darkgreen", significant = "red3", `anchor
-    item` = "black"),
+  testColors = list(`not significant` = "darkgreen", significant = "red3", anchoritem =
+    "black"),
   TestResults = NULL,
   ask = TRUE,
   ...
@@ -29,7 +29,7 @@ graphicalTest(
 \itemize{
 \item "not significant" = "darkgreen"
 \item "significant" = "red3"
-\item "anchor item" = "black"
+\item "anchoritem" = "black"
 }}
 
 \item{TestResults}{Waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.}

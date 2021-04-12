@@ -66,6 +66,6 @@ plot(ap_object, location_picker = TRUE)
 }
 \references{
 \itemize{
-\item Strobl, C., Kopf, J., Kohler, L., von Oertzen, T. & Zeileis, A. (2021). Anchor point selection: An approach for anchoring without anchor items. Applied Psychological Measurement, to appear.
+\item Strobl, C., Kopf, J., Kohler, L., von Oertzen, T. & Zeileis, A. (2021). Anchor point selection: An approach for anchoring without anchoritems. Applied Psychological Measurement, to appear.
 }
 }

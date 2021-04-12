@@ -7,13 +7,13 @@
 shiftPlot(
   object,
   shift = NULL,
-  testColors = list(`not significant` = "darkgreen", significant = "red3", `anchor
-    item` = "black"),
-  testPCH = list(`not significant` = 21, significant = 22, `anchor item` = 23),
+  testColors = list(`not significant` = "darkgreen", significant = "red3", anchoritem =
+    "black"),
+  testPCH = list(`not significant` = 21, significant = 22, anchoritem = 23),
   addLegend = TRUE,
   highlight = NULL,
   digits = 3,
-  cex.legend = 0.5,
+  cex.legend = 0.75,
   TestResults = NULL,
   ask = TRUE,
   ...
@@ -28,14 +28,14 @@ shiftPlot(
 \itemize{
 \item "not significant" = "darkgreen"
 \item "significant" = "red3"
-\item "anchor item" = "black"
+\item "anchoritem" = "black"
 }}
 
 \item{testPCH}{list with pch for the items (for color blind people):
 \itemize{
 \item "not significant" = 21
 \item "significant" = 22
-\item "anchor item" = 23
+\item "anchoritem" = 23
 }}
 
 \item{addLegend}{logic, add a legend to the plot, default: False}

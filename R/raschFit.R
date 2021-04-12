@@ -47,10 +47,7 @@ checkInput <- function(manuelInput,resp.var,group.var){
          call. = FALSE)
   }
 
-  if(is.list(manuelInput[,resp.var]))
-    manuelInput = data.frame("i" = I(do.call(cbind,unname(manuelInput[,resp.var]))),"groups" = as.factor(manuelInput[,group.var]))
-  else
-    manuelInput = data.frame("i" = I(as.matrix((manuelInput[,resp.var]))),"groups" = as.factor(manuelInput[,group.var]))
+  manuelInput = data.frame("i" = I(if(is.list(manuelInput[,resp.var])) sapply(unname(manuelInput[,resp.var]),as.numeric) else unname(manuelInput[,resp.var])),"groups" = as.factor(manuelInput[,group.var]))
 
   #remove NA rows: not necessary for response (the rasch model can handle them), but necessary for group memberships
   manuelInput <- manuelInput[stats::complete.cases(manuelInput$groups),]
@@ -69,7 +66,6 @@ checkInput <- function(manuelInput,resp.var,group.var){
 
   if(length(groupLevels)==2 && !all(c(0,1)%in%groupLevels)) levels(manuelInput$groups) = c(0,1)
 
-
   idCheck = which(apply(X = manuelInput$i,MARGIN = 2,function(x){
     all(x==manuelInput$groups)
   }))
@@ -77,6 +73,5 @@ checkInput <- function(manuelInput,resp.var,group.var){
   if(any(idCheck)) manuelInput$i = manuelInput$i[,-idCheck]
 
   return(manuelInput)
-
 }
 

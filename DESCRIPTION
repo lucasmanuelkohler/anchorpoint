@@ -7,8 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "lucas.kohler@hispeed.ch")
 Description: This package implements a Anchor Point Selection method based on the paper 'Anchor Point Selection – Scale Alignment Based on an Inequality Criterion' by Strobl et al. (2020). It provides data generating processes and graphical decision support functions (criterion path, shifted item plots and a graphical test).   
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -26,4 +25,4 @@ RdMacros: Rdpack
 Suggests: 
     psychotree,
     qvcalc,
-    mirt
+    mirt,mvtnorm

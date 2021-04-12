@@ -41,7 +41,7 @@ print.plot.anchorpoint <- function(x,...) {
 
   for(grid in names(x)){
     for(criterion in names(x[[grid]])){
-      nam <- c("shift", "scaled criterion value", "criterion value", "grid position", "anchor item")[1:length(x[[grid]][[criterion]])]
+      nam <- c("shift", "scaled criterion value", "criterion value", "grid position", "anchoritem")[1:length(x[[grid]][[criterion]])]
       cat(paste("Location pick(s) for",grid,"grid with",criterion,"measure:",sep = " "),"\n")
       print(x[[grid]][[criterion]])
       cat("\n")
@@ -60,7 +60,7 @@ print.anchorpoint <- function(x,...) {
   temp <- x$global_optimum
   for(grid in names(temp)){
     for(criterion in names(temp[[grid]])){
-      nam <- c("shift", "criterion value", "anchor item")[1:length(temp[[grid]][[criterion]])]
+      nam <- c("shift", "criterion value", "anchoritem")[1:length(temp[[grid]][[criterion]])]
       cat(paste("Global optimum for",grid,"grid with",criterion,"measure:",sep = " "),"\n")
       print(structure(unlist(temp[[grid]][[criterion]])),...)
       cat("\n")
@@ -81,12 +81,12 @@ print.summary.anchorpoint <- function(x, ...) {
   for(grid in names(temp)){
     for(criterion in names(temp[[grid]])){
 
-      nam <- c("shift", "criterion value", "grid position", "anchor item")[1:length(x$global_optimum[[grid]][[criterion]])]
+      nam <- c("shift", "criterion value", "grid position", "anchoritem")[1:length(x$global_optimum[[grid]][[criterion]])]
 
       cat(paste("Global optimum for",grid,"grid with",criterion,"measure:",sep = " "),"\n")
       print(structure(as.data.frame(x$global_optimum[[grid]][[criterion]]), names = nam),...)
 
-      nam <- c("shift", "criterion value", "anchor item")[1:length(x$all_results[[grid]][[criterion]])]
+      nam <- c("shift", "criterion value", "anchoritem")[1:length(x$all_results[[grid]][[criterion]])]
 
       cat("\n")
       cat(paste("All results for",grid,"grid with",criterion,"measure:",sep = " "),"\n")
@@ -220,7 +220,7 @@ WaldtestpV <- function(object, shift = NULL,...) {
 #' # Then, click on the desired positions and press ESCAPE.
 #' plot(ap_object, location_picker = TRUE)
 #' @references
-#' - Strobl, C., Kopf, J., Kohler, L., von Oertzen, T. & Zeileis, A. (2021). Anchor point selection: An approach for anchoring without anchor items. Applied Psychological Measurement, to appear.
+#' - Strobl, C., Kopf, J., Kohler, L., von Oertzen, T. & Zeileis, A. (2021). Anchor point selection: An approach for anchoring without anchoritems. Applied Psychological Measurement, to appear.
 anchorpoint <- function(rm1, rm2, select = c("CLF Criterion","Gini Index"), grid = c("symmetric", "sparse")){
 
   select <- match.arg(select, several.ok = TRUE)
@@ -431,7 +431,7 @@ plotCriterion <- function(object,names,location_picker = FALSE,lty = 1,col = 1,c
     if(lenP){
       graphics::segments(x0 = grid_list[points],x1 = grid_list[points],y0 = rep(-.1,lenP),y1 = criterion_values_scaled[points],col = scales::alpha(col,.25),lty = 2)
       out <- cbind(grid_list[points],criterion_values_scaled[points], criterion_values[points], points, results_list$anchor_item[points])
-      colnames(out) <- c("shift", "scaled criterion value", "criterion value", "grid position", "anchor item")[1:dim(out)[2]]
+      colnames(out) <- c("shift", "scaled criterion value", "criterion value", "grid position", "anchoritem")[1:dim(out)[2]]
       rownames(out) <- paste("pick", 1:lenP,sep = " ")
       return(as.data.frame(out))
     }
@@ -446,7 +446,7 @@ plotCriterion <- function(object,names,location_picker = FALSE,lty = 1,col = 1,c
 #' @param testColors  list with colors for the items:
 #' - "not significant" = "darkgreen"
 #' - "significant" = "red3"
-#' - "anchor item" = "black"
+#' - "anchoritem" = "black"
 #' @param TestResults  Waldtest object from anchorpoint::getWald. If NULL, then they are computed within the function. Default: NULL.
 #' @param ask logical, ask for next plot. Default = TRUE
 #' @param ...   further arguments for plot() like lty, cex.axis, cex.main, cex.lab etc.
@@ -471,8 +471,8 @@ plotCriterion <- function(object,names,location_picker = FALSE,lty = 1,col = 1,c
 #' @references
 #' Credit: Part of the code is adapted from the function \code{plotGOF} of the package \pkg{eRm} (Version: 1.32.1):
 #' - Mair P, Hatzinger R. Extended Rasch modeling: The eRm package for the application of IRT models in R. Journal of Statistical Software. 2007;20 (9) :1-20.
-graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
-                          testColors = list("not significant"="darkgreen","significant"="red3","anchor item"="black"),TestResults = NULL,ask = TRUE,...){
+graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,testColors = list('not significant'="darkgreen",'significant'="red3",'anchoritem'="black"),
+                          TestResults = NULL,ask = TRUE,...){
 
   if (!inherits(object, "anchorpoint"))
     stop("use only with \"anchorpoint\" objects")
@@ -510,12 +510,12 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
 
     results[seq(1:len)[-aliased_item]] <- res$pvalues[-aliased_item]
 
-    names(testColors) <- c("not significant","significant","anchor item")
+    names(testColors) <- c("not significant","significant","anchoritem")
     if(!is.list(testColors)) testColors = as.list(testColors)
 
     colVec = rep(testColors$`not significant`,length(beta1))
     colVec[which(results<alpha)] <- testColors$significant
-    colVec[which(is.na(results))] <- testColors$`anchor item`
+    colVec[which(is.na(results))] <- testColors$`anchoritem`
     z <- stats::qnorm(alpha/2.0, lower.tail = FALSE)
 
     setRange <- max(diff(range(beta1)+c(-1,1)*stats::var(beta1)/2),diff(range(beta2)+c(-1,1)*stats::var(beta2)/2))
@@ -578,11 +578,11 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
 #' @param testColors  list with colors for the items:
 #' - "not significant" = "darkgreen"
 #' - "significant" = "red3"
-#' - "anchor item" = "black"
+#' - "anchoritem" = "black"
 #' @param testPCH  list with pch for the items (for color blind people):
 #' - "not significant" = 21
 #' - "significant" = 22
-#' - "anchor item" = 23
+#' - "anchoritem" = 23
 #' @param addLegend  logic, add a legend to the plot, default: False
 #' @param highlight  positive integer(s), numbers of the items to be highlighted
 #' @param digits  positive integer, controls rounding of the shift in title
@@ -609,9 +609,9 @@ graphicalTest <- function(object,shift = NULL,highlight = NULL,alpha = 0.05,
 #' shiftPlot(ap_object)
 #' @export
 shiftPlot <- function(object, shift = NULL,
-                      testColors = list("not significant"="darkgreen","significant"="red3","anchor item"="black"),
-                      testPCH = list("not significant"=21,"significant"=22,"anchor item"=23),# colors for no significant DIF, significant DIF and anchor item
-                       addLegend = TRUE,highlight = NULL,digits = 3,cex.legend  = .5,TestResults = NULL,ask = TRUE,...){
+                      testColors = list('not significant'="darkgreen",'significant'="red3",'anchoritem'="black"),
+                      testPCH = list('not significant'=21,'significant'=22,'anchoritem'=23),
+                       addLegend = TRUE, highlight = NULL, digits = 3, cex.legend  = .75, TestResults = NULL,ask = TRUE,...){
 
   if (!inherits(object, "anchorpoint"))
     stop("use only with \"anchorpoint\" objects")
@@ -619,7 +619,7 @@ shiftPlot <- function(object, shift = NULL,
   # Do plot with a specific shift
   plt <- function(shift,...){
     stopifnot("Shift must be numeric" = is.numeric(shift))
-    if(is.null(names(testColors))) names(testColors) <- list("not significant","significant","anchor item")
+    if(is.null(names(testColors))) names(testColors) <- list('not significant','significant','anchoritem')
     cf1 = c(0,stats::coef(object$rm$rm1))
     cf2 = c(0,stats::coef(object$rm$rm2))
 
@@ -636,7 +636,7 @@ shiftPlot <- function(object, shift = NULL,
 
     col = rep(testColors$`not significant`,length(cf2))
     col[significant <- which(TestResults$p<=0.05)] = testColors$significant
-    col[aliaseditem <- which(is.na(TestResults$p))] = testColors$`anchor item`
+    col[aliaseditem <- which(is.na(TestResults$p))] = testColors$`anchoritem`
 
     cf2_shifted = cf2 + shift
     ylimits = range(c(range(cf2_shifted),range(cf1)))
@@ -652,7 +652,7 @@ shiftPlot <- function(object, shift = NULL,
       plot(cf1,
            xlab = "Item", ylab = "Parameter",
            ylim = ylimits,
-           xaxt="n",col = 1,
+           xaxt="n",col = "darkgrey",
            panel.first = c(graphics::abline(v = highlight, lty = 2, col = 'grey'),
                            graphics::rect(x0,y0,x1,y1, col= grDevices::rgb(1,1,0,alpha=0.25),border = NA)),
            main = paste("Shifted item parameters at c = ",round(shift,digits = digits),sep = " "),...)
@@ -661,18 +661,21 @@ shiftPlot <- function(object, shift = NULL,
     }else{
       plot(cf1, xlab = "Item", ylab = "Parameter",
            ylim = ylimits,
-           xaxt="n",col = 1,
+           xaxt="n",col = "darkgrey",
            main = paste("Shifted item parameters at c = ",round(shift,digits = digits),sep = " "),...)
     }
 
     pchVector = rep(testPCH$`not significant`,length(cf2))
     pchVector[significant] <- testPCH$significant
-    pchVector[aliaseditem] <- testPCH$`anchor item`
-
+    pchVector[aliaseditem] <- testPCH$`anchoritem`
 
     graphics::points(cf2_shifted,col=col,pch = pchVector,cex=.8,  bg=col)
     graphics::axis(side=1, at=seq(1,length(cf1)))
-    if(addLegend) graphics::legend("top",legend = names(testColors),col = unlist(testColors),pch = unlist(testPCH),pt.bg = unlist(testColors),bty = 'n',ncol=3,  inset =  -.1,xpd = T,cex = cex.legend)
+
+    if(addLegend) graphics::legend(x = "topleft", legend = names(testColors),
+                                   col = unlist(testColors),pch = unlist(testPCH),
+                                   pt.bg = unlist(testColors), bty = 'n', ncol=3,
+                                   cex = cex.legend, inset =  -.1,xpd = TRUE, x.intersp = .8)
   }
 
   if(is.null(shift)){
@@ -688,4 +691,3 @@ shiftPlot <- function(object, shift = NULL,
     }
   }else plt(shift,...)
 }
-
